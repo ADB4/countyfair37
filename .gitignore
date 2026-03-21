@@ -1,3 +1,10 @@
+# Web build output
+countyfair-37/build/
+countyfair-37/.godot/
+
+# GDExtension compiled output
+extension/bin/
+extension/build/
 # Godot 4+ specific ignores
 .godot/
 .nomedia
