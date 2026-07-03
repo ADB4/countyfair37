@@ -1,0 +1,110 @@
+[gd_scene load_steps=16 format=3]
+
+[sub_resource type="StandardMaterial3D" id="mat_ground"]
+albedo_color = Color(0.42, 0.47, 0.4, 1)
+roughness = 1.0
+
+[sub_resource type="StandardMaterial3D" id="mat_counter"]
+albedo_color = Color(0.7, 0.16, 0.14, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="mat_backdrop"]
+albedo_color = Color(0.16, 0.2, 0.3, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="mat_wall"]
+albedo_color = Color(0.55, 0.53, 0.5, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="mesh_ground"]
+material = SubResource("mat_ground")
+size = Vector3(24, 0.4, 24)
+
+[sub_resource type="BoxMesh" id="mesh_counter"]
+material = SubResource("mat_counter")
+size = Vector3(9, 1.1, 0.6)
+
+[sub_resource type="BoxMesh" id="mesh_backdrop"]
+material = SubResource("mat_backdrop")
+size = Vector3(13, 4.2, 0.4)
+
+[sub_resource type="BoxMesh" id="mesh_wall"]
+material = SubResource("mat_wall")
+size = Vector3(0.4, 4.2, 11.4)
+
+[sub_resource type="BoxShape3D" id="shape_ground"]
+size = Vector3(24, 0.4, 24)
+
+[sub_resource type="BoxShape3D" id="shape_counter"]
+size = Vector3(9, 1.1, 0.6)
+
+[sub_resource type="BoxShape3D" id="shape_backdrop"]
+size = Vector3(13, 4.2, 0.4)
+
+[sub_resource type="BoxShape3D" id="shape_wall"]
+size = Vector3(0.4, 4.2, 11.4)
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_horizon_color = Color(0.66, 0.67, 0.69, 1)
+ground_horizon_color = Color(0.66, 0.67, 0.69, 1)
+
+[sub_resource type="Sky" id="sky"]
+sky_material = SubResource("sky_mat")
+
+[sub_resource type="Environment" id="world_env"]
+background_mode = 2
+sky = SubResource("sky")
+
+[node name="GreyboxEnvironment" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("mesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("shape_ground")
+
+[node name="Counter" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 4.3)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Counter"]
+mesh = SubResource("mesh_counter")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Counter"]
+shape = SubResource("shape_counter")
+
+[node name="Backdrop" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, -6.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Backdrop"]
+mesh = SubResource("mesh_backdrop")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Backdrop"]
+shape = SubResource("shape_backdrop")
+
+[node name="SideWallLeft" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.5, 2.1, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideWallLeft"]
+mesh = SubResource("mesh_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SideWallLeft"]
+shape = SubResource("shape_wall")
+
+[node name="SideWallRight" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 2.1, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideWallRight"]
+mesh = SubResource("mesh_wall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SideWallRight"]
+shape = SubResource("shape_wall")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("world_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 0.383022, -0.321394, 0, 0.642788, 0.766044, 0.5, -0.663414, 0.55667, 0, 8, 0)
+shadow_enabled = true

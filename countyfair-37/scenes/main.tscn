@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dgl4hf34vjh6"]
+
+[ext_resource type="Script" uid="uid://c6k7ri6qns8vk" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/environment.tscn" id="2_env"]
+[ext_resource type="Script" uid="uid://do7b8f88y78te" path="res://scripts/player_controller.gd" id="3_player"]
+[ext_resource type="PackedScene" path="res://scenes/pie_projectile.tscn" id="4_pie"]
+[ext_resource type="PackedScene" path="res://scenes/target_character.tscn" id="5_target"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="6_hud"]
+
+[node name="Main" type="Node3D" unique_id=405553108]
+script = ExtResource("1_main")
+
+[node name="GreyboxEnvironment" parent="." unique_id=553770405 instance=ExtResource("2_env")]
+
+[node name="PlayerController" type="Node3D" parent="." unique_id=2098500059 node_paths=PackedStringArray("projectile_parent")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5)
+script = ExtResource("3_player")
+pie_scene = ExtResource("4_pie")
+projectile_parent = NodePath("../ProjectileManager")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerController" unique_id=1976585283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+current = true
+
+[node name="SpawnPoint" type="Marker3D" parent="PlayerController/Camera3D" unique_id=325591808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.18, -0.55)
+
+[node name="TargetCharacter" parent="." unique_id=568340998 instance=ExtResource("5_target")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="ProjectileManager" type="Node3D" parent="." unique_id=2088953143]
+
+[node name="HUD" parent="." unique_id=735346782 instance=ExtResource("6_hud")]
+unique_name_in_owner = true

@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/pie_projectile.gd" id="1_pie"]
+
+[sub_resource type="StandardMaterial3D" id="mat_pie"]
+albedo_color = Color(0.94, 0.87, 0.7, 1)
+roughness = 0.9
+
+[sub_resource type="CylinderMesh" id="mesh_pie"]
+material = SubResource("mat_pie")
+top_radius = 0.16
+bottom_radius = 0.13
+height = 0.08
+
+[sub_resource type="CylinderShape3D" id="shape_pie"]
+height = 0.08
+radius = 0.16
+
+[sub_resource type="SphereMesh" id="mesh_glob"]
+material = SubResource("mat_pie")
+radius = 0.045
+height = 0.09
+
+[node name="PieProjectile" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 1
+mass = 0.5
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_pie")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("mesh_pie")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("shape_pie")
+
+[node name="SplatParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("mesh_glob")
+direction = Vector3(0, 1, 0)
+spread = 75.0
+gravity = Vector3(0, -9.8, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 3.5
+scale_amount_min = 0.5
+scale_amount_max = 1.0
