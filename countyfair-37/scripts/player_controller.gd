@@ -43,6 +43,14 @@ var active := false:
 		if not value:
 			_cancel_charge()
 
+## Camera field-of-view in degrees. Changing this at runtime immediately
+## updates the Camera3D (used by the options-menu FOV slider).
+var camera_fov := 75.0:
+	set(value):
+		camera_fov = value
+		if _camera != null:
+			_camera.fov = value
+
 var _yaw := 0.0
 var _pitch := 0.0
 var _charging := false
@@ -51,6 +59,11 @@ var _cooldown_left := 0.0
 
 @onready var _camera: Camera3D = $Camera3D
 @onready var _spawn_point: Marker3D = $Camera3D/SpawnPoint
+
+
+func _ready() -> void:
+	# Apply stored FOV in case it was set before _camera was available.
+	_camera.fov = camera_fov
 
 
 func _unhandled_input(event: InputEvent) -> void:
